@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="auth-container">
+  <div class="auth-card">
+    <h2>Welcome Back 👋</h2>
+    <p class="subtitle">Please login to your account</p>
+    
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn">Login</button>
+    </form>
+    
+    <p class="switch-link">
+      Don’t have an account? <a href="{% url 'register' %}">Register</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+{% comment %} <h2>Login</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>
+<p>Don't have an account? <a href="{% url 'register' %}">Register</a></p> {% endcomment %}

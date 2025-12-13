@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+    <h2>Create a New job</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Post</button>
+</form>
+
+    
+
+    <button>
+        <a href="{% url 'feed' %}">Back to Posts</a>
+    </button>
+</div>
+</div>
+{% endblock %}

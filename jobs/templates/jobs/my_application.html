@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="applications-container">
+    <h2 class="page-title">My Applications</h2>
+
+    {% if applications %}
+        <div class="table-wrapper">
+            <table class="applications-table">
+                <thead>
+                    <tr>
+                        <th>Job</th>
+                        <th>Status</th>
+                        <th>Date Applied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app in applications %}
+                        <tr>
+                            <td>{{ app.job.title }}</td>
+                            <td class="status {{ app.status|lower }}">{{ app.get_status_display }}</td>
+                            <td>{{ app.applied_at|date:"M d, Y" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty-message">You haven't applied for any jobs yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

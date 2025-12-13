@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'jobs/css/job_detail.css' %}">
+
+<div class="job-detail-container">
+    <!-- Job Title & Company -->
+    <div class="job-header">
+        <h1 class="job-title">{{ job.title }}</h1>
+        <p class="job-meta">
+            Posted by <span class="company-name">{{ job.company.name }}</span> • {{ job.location }}
+        </p>
+        <span class="job-category">{{ job.category }}</span>
+    </div>
+
+    <!-- Job Description -->
+    <div class="job-section">
+        <h2>Job Description</h2>
+        <p>{{ job.description }}</p>
+    </div>
+
+    <!-- Requirements -->
+    {% if job.requirements %}
+    <div class="job-section">
+        <h2>Requirements</h2>
+        <ul>
+            {% for req in job.requirements.splitlines %}
+                <li>{{ req }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Apply Button -->
+    <div class="job-footer">
+        <p class="posted-date">Posted on: {{ job.created_at|date:"F j, Y" }}</p>
+        <a href="{% url 'apply_for_job' job.id %}" class="apply-btn">Apply Now</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,1197 @@
+/* ========== Root & Reset ========== */
+:root {
+  --bg: #0b1120;
+  /* dark base */
+  --card: #0c1327cc;
+  /* glass card */
+  --stroke: #1f2a44;
+  /* subtle border */
+  --text: #dbe5ff;
+  --muted: #9fb1ffb3;
+  --blue: #3b82f6;
+  /* accent */
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+}
+
+* {
+  box-sizing: border-box
+}
+html,body {
+  height: 100%
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  color: var(--text);
+  background: #0b1220;
+}
+
+/* ========== Modern NAV ========== */
+/* ====== NAVBAR ====== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06); /* softer shadow */
+  padding: 6px 0; /* reduce navbar height */
+}
+
+/* Inner Container */
+.nav__inner {
+  max-width: 1050px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px; /* reduced padding for a smaller height */
+}
+
+/* Brand / Logo */
+.nav__brand {
+  color: var(--blue-700);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  font-size: 1rem; /* smaller brand text */
+  transition: color 0.2s ease-in-out;
+}
+
+.nav__brand:hover {
+  color: var(--blue-600);
+}
+
+/* Navbar Links */
+.nav__links {
+  list-style: none;
+  display: flex;
+  gap: 14px; /* reduce gap between links */
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar Link Styles */
+.nav__links a {
+  color: #0f172a;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem; /* make links slightly smaller */
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover Effect */
+.nav__links a:hover {
+  color: var(--blue-600);
+  background-color: rgba(59, 130, 246, 0.08); /* subtle hover highlight */
+}
+
+/* Active Link Highlight (Optional) */
+.nav__links a.activ
+
+
+/* Dropdown */
+.nav__dropdown {
+  position: relative
+}
+.nav__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0f172a;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(2, 6, 23, .2);
+}
+.nav__trigger .caret {
+  transition: transform .2s ease
+}
+
+/* Menu */
+.nav__menu {
+  list-style: none;
+  margin: 0;
+  padding: 8px 6px;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  background: #0f172a;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 12px;
+  min-width: 200px;
+  max-width: min(92vw, 22rem);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, .35);
+  display: none;
+  transform-origin: top right;
+  animation: menuIn .18s ease forwards;
+}
+@keyframes menuIn {
+  from {
+    opacity: 0;
+    transform: scale(.96)
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1)
+  }}
+.nav__menu li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #e5edff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.nav__menu li a:hover {
+  background: #111c36;
+  color: #fff
+}
+
+/* Open state (added by JS) */
+.nav__dropdown.open .nav__menu {
+  display: block
+}
+.nav__dropdown.open .nav__trigger .caret {
+  transform: rotate(180deg)
+}
+
+/* ========== Auth page look (like your reference) ========== */
+.auth {
+  min-height: calc(100vh - 72px);
+  display: grid;
+  place-items: center;
+  padding: 28px 16px;
+  background:
+  radial-gradient(1200px 600px at 10% -10%, #1f2a44 0%, transparent 60%),
+  radial-gradient(900px 400px at 100% 10%, #102044 0%, transparent 60%),
+  linear-gradient(180deg, #0b1220 0%, #0b1220 100%);
+}
+
+.auth__card {
+  width: min(980px, 100%);
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 22px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 30px 80px rgba(0,0,0,.35);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+}
+.auth__left {
+  padding: 40px 36px 44px 36px;
+}
+.auth__eyebrow {
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: .12em;
+  font-size: .8rem
+}
+.auth__title {
+  font-size: 2.1rem;
+  font-weight: 900;
+  margin: 8px 0 2px
+}
+.auth__subtitle {
+  color: var(--muted);
+  margin-bottom: 22px
+}
+.form__row {
+  display: flex;
+  gap: 12px
+}
+.field {
+  width: 100%
+}
+.label {
+  font-size: .85rem;
+  color: #a9b6e7;
+  margin-bottom: 6px;
+  display: block
+}
+.input {
+  width: 100%;
+  padding: 14px 14px;
+  background: #0a1327;
+  color: #e8eeff;
+  border: 1px solid #1f2a44;
+  border-radius: 12px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(59,130,246,.15)
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap
+}
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-weight: 800;
+}
+.btn--ghost {
+  background: #0a1327;
+  color: #e5edff;
+  border: 1px solid #1f2a44;
+}
+.btn--primary {
+  color: white;
+  background: linear-gradient(135deg, var(--blue-600), var(--blue));
+  box-shadow: 0 10px 24px rgba(59,130,246,.35);
+}
+.btn--primary:hover {
+  filter: brightness(1.05)
+}
+.helper {
+  color: #9fb1ff;
+  font-weight: 700;
+  margin-top: 10px
+}
+
+.caption {
+  color: #ffff !important;
+}
+
+.helper a {
+  color: #c7d7ff;
+  text-decoration: none
+}
+.helper a:hover {
+  text-decoration: underline
+}
+
+.auth__right {
+  background: radial-gradient(800px 500px at 60% 40%, rgba(59,130,246,.25), transparent 60%), url('../images/hero.jpg') center/cover no-repeat;
+  min-height: 360px;
+}
+
+/* Mobile */
+@media (max-width: 860px) {
+  .auth__card {
+    grid-template-columns: 1fr
+  }
+  .auth__right {
+    display: none
+  }
+}
+
+/* Auth Pages */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  /* account for navbar */
+  background: #f4f6fb;
+}
+
+.auth-card {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.auth-card h2 {
+  margin-bottom: 10px;
+  color: #05123b;
+  font-size: 24px;
+}
+
+.auth-card .subtitle {
+  margin-bottom: 20px;
+  color: #000000;
+  font-size: 14px;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+  color: #05123b;
+}
+
+.auth-card form p {
+  margin: 0;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+}
+
+.auth-card input:focus {
+  border-color: #05123b;
+
+  box-shadow: 0 0 5px rgba(5,18,59,0.3);
+}
+
+.auth-card .btn {
+  background: #05123b;
+  color: #fffefeff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.auth-card .btn:hover {
+  background: #0a2a6e;
+}
+
+.switch-link {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.switch-link a {
+  color: #05123b;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.switch-link a:hover {
+  text-decoration: underline;
+}
+
+/* ========== Social Feed (Posts & Comments) ========== */
+/* Wrapper */
+.feed-wrap {
+  max-width: 760px;
+  margin: 28px auto;
+  padding: 0 16px;
+}
+
+/* Cards (scoped so it doesn't touch other pages) */
+.feed-wrap .card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  overflow: hidden;
+}
+.feed-wrap .card + .card {
+  margin-top: 16px;
+}
+.feed-wrap .card-body {
+  padding: 18px 18px 16px;
+}
+
+/* Composer (Create Post) */
+.feed-composer textarea,
+.feed-composer .input,
+.feed-wrap textarea {
+  width: 100%;
+  padding: 14px 14px;
+  background: #0a1327;
+  color: var(--text);
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  outline: none;
+  resize: vertical;
+  min-height: 90px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.feed-composer textarea::placeholder {
+  color: var(--muted);
+}
+.feed-composer textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(59,130,246,.15);
+}
+
+/* Post header */
+.post__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.post__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #111c36;
+  border: 1px solid rgba(255,255,255,.08);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #cbd5ff;
+  flex: 0 0 36px;
+}
+.post__meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.post__author {
+  font-weight: 800;
+  color: var(--text);
+}
+.post__time {
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+/* Post content */
+.post__content {
+  margin: 10px 0 8px;
+  color: var(--text);
+}
+
+/* Actions */
+.post__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* Buttons (map to your theme) */
+.feed-wrap .btn {
+  border: 1px solid var(--stroke);
+  background: #0a1327;
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform .06s ease, filter .2s ease, border-color .2s ease;
+}
+.feed-wrap .btn:hover {
+  filter: brightness(1.05);
+}
+.feed-wrap .btn:active {
+  transform: translateY(1px);
+}
+
+.feed-wrap .btn-primary {
+  background: linear-gradient(135deg, var(--blue-600), var(--blue));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 10px 22px rgba(59,130,246,.35);
+}
+.feed-wrap .btn-light {
+  background: #0a1327;
+  color: #e5edff;
+}
+.feed-wrap .btn-danger {
+  background: #ef4444;
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 18px rgba(239,68,68,.35);
+}
+
+/* Tiny counter pill (if you add counts inside buttons) */
+.count {
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid var(--stroke);
+}
+
+/* Comments */
+.comments {
+  margin-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding-top: 12px;
+}
+.comment {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.comment strong {
+  color: #e5eaff;
+}
+.comment .comment__meta {
+  color: var(--muted);
+  font-size: .82rem;
+}
+.comment .comment__delete {
+  color: #ff9a9a;
+  text-decoration: none;
+  font-size: .86rem;
+  margin-left: 8px;
+}
+.comment .comment__delete:hover {
+  text-decoration: underline;
+}
+
+/* Comment form */
+.comment-form input[type="text"],
+.comment-form .input {
+  width: 100%;
+  padding: 12px 12px;
+  background: #0a1327;
+  color: var(--text);
+  border: 1px solid var(--stroke);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.comment-form input[type="text"]::placeholder {
+  color: var(--muted);
+}
+.comment-form input[type="text"]:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(59,130,246,.15);
+}
+
+/* Share link look */
+.share-link {
+  color: #c7d7ff;
+  text-decoration: none;
+}
+.share-link:hover {
+  text-decoration: underline;
+}
+
+/* If you aren't loading Bootstrap, keep collapses visible */
+.no-bootstrap .collapse {
+  display: block !important;
+}
+
+/* Mobile tweaks */
+@media (max-width: 540px) {
+  .feed-wrap {
+    padding: 0 12px;
+  }
+  .feed-wrap .card-body {
+    padding: 14px;
+  }
+  .post__actions {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+/* === Job List Container === */
+.job-list-container {
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 20px;
+    background: transparent; /* Match dark theme */
+}
+
+/* === Page Title === */
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* === Filter Form === */
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+    justify-content: center;
+}
+
+.search-input,
+.category-select {
+    padding: 10px 12px;
+    background: #0a1327; /* Matches feed & auth inputs */
+    color: var(--text);
+    border: 1px solid var(--stroke);
+    border-radius: 10px;
+    font-size: 14px;
+    min-width: 200px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus,
+.category-select:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    outline: none;
+}
+
+.filter-btn {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--blue-600), var(--blue));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: filter 0.2s ease;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+}
+
+.filter-btn:hover {
+    filter: brightness(1.05);
+}
+
+/* === Job List === */
+.job-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* === Job Card === */
+.job-card {
+    background: var(--card);
+    padding: 18px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    transition: all 0.2s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.job-card:hover {
+    border-color: var(--blue);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.25);
+}
+
+.job-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* === Job Info === */
+.job-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #cbd5ff;
+    margin-bottom: 6px;
+}
+
+.job-category {
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.company-location {
+    font-size: 0.95rem;
+    color: #9fb1ff;
+    margin-top: 5px;
+}
+
+/* === No Jobs === */
+.no-jobs {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--muted);
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--stroke);
+    border-radius: 10px;
+}
+
+/* ===== Job Detail Styling ===== */
+
+.job-detail-container {
+    max-width: 750px;
+    margin: 20px auto;
+    background-color: #111827;
+    color: #e5e7eb;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: 1px solid #1f2937;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Header */
+.job-header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #1f2937;
+    margin-bottom: 20px;
+}
+
+.job-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3b82f6;
+    margin: 0;
+}
+
+.job-meta {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    margin-top: 6px;
+}
+
+.company-name {
+    color: #e5e7eb;
+    font-weight: 600;
+}
+
+.job-category {
+    display: inline-block;
+    background-color: #2563eb;
+    color: white;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* Sections */
+.job-section {
+    margin-bottom: 20px;
+}
+
+.job-section h2 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #f3f4f6;
+}
+
+.job-section p,
+.job-section ul {
+    color: #9ca3af;
+    line-height: 1.6;
+}
+
+.job-section ul {
+    padding-left: 20px;
+}
+
+.job-section li {
+    margin-bottom: 6px;
+}
+
+/* Footer */
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #1f2937;
+}
+
+.posted-date {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.apply-btn {
+    background-color: #2563eb;
+    color: #fff;
+    padding: 8px 18px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s ease-in-out;
+}
+
+.apply-btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* ====== Container Styling ====== */
+/* ====== Applications Container (Improved & Consistent) ====== */
+/* ====== Applications Container (Improved & Consistent) ====== */
+.applications-container {
+    max-width: 950px;
+    margin: 40px auto;
+    padding: 25px 30px;
+    background: #f8fafc; /* light gray-blue tone for consistency */
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Add a subtle hover elevation effect */
+.applications-container:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+/* ====== Page Title (Match Other Pages) ====== */
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e293b; /* Neutral dark text */
+    margin-bottom: 25px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* ====== Table Wrapper ====== */
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 10px;
+}
+
+/* ====== Applications Table ====== */
+.applications-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+}
+
+/* Table Header */
+.applications-table th {
+    padding: 14px 16px;
+    background: #3b82f6; /* Same blue accent we used before */
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: left;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+/* Table Data Cells */
+.applications-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+/* Hover Effect for Rows */
+.applications-table tr:hover {
+    background-color: #f1f5f9;
+    transition: background 0.2s ease-in-out;
+}
+
+/* ====== Status Colors ====== */
+.status.approved {
+    color: #16a34a; /* Green */
+    font-weight: 600;
+}
+.status.pending {
+    color: #f59e0b; /* Amber */
+    font-weight: 600;
+}
+.status.rejected {
+    color: #dc2626; /* Red */
+    font-weight: 600;
+}
+
+/* ====== Empty Message ====== */
+.empty-message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+/* ====== Applications Page Container ====== */
+.applications-container {
+    max-width: 850px;
+    margin: 25px auto;
+    padding: 25px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ====== Heading ====== */
+.applications-container h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+}
+
+/* ====== Application List ====== */
+.applications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ====== Application Card ====== */
+.application-card {
+    padding: 20px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.application-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ====== Header Section ====== */
+.application-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.application-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.applied-text {
+    color: #475569;
+    font-weight: 400;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-badge.accepted {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.status-badge.declined {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.status-badge.pending {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+/* ====== Applicant Details ====== */
+.application-details p {
+    margin: 6px 0;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+.project-link {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.project-link:hover {
+    text-decoration: underline;
+}
+
+/* ====== Action Buttons ====== */
+.application-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-accept {
+    background-color: #22c55e;
+    color: white;
+}
+
+.btn-accept:hover {
+    background-color: #16a34a;
+}
+
+.btn-decline {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn-decline:hover {
+    background-color: #dc2626;
+}
+
+/* ====== Empty State ====== */
+.empty-state {
+    text-align: center;
+    font-size: 1rem;
+    padding: 20px;
+    color: #6b7280;
+}
+
+/* ====== Feed Container ====== */
+.feed-container {
+    max-width: 850px;
+    margin: 25px auto;
+    padding: 25px;
+    background: #0b1120;  /* Same dark background as job list */
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ====== Heading ====== */
+.feed-container h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #dbe5ff; /* Light heading like job list */
+    border-bottom: 2px solid #1f2a44;
+    padding-bottom: 10px;
+}
+
+/* ====== Feed List ====== */
+.feed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ====== Feed Card ====== */
+.feed-card {
+    padding: 20px;
+    background: #10192e; /* Consistent card background */
+    border: 1px solid #1f2a44;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
+}
+.feed-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ====== Feed Header ====== */
+.feed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.user-role {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.post-date {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* ====== Post Content ====== */
+.feed-content p {
+    font-size: 0.95rem;
+    color: #334155;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+/* ====== Post Image ====== */
+.post-image-container {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f1f5f9;
+    margin-bottom: 10px;
+}
+
+.post-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain; /* Ensures the full image fits without cropping */
+}
+
+/* ====== Post Actions ====== */
+.feed-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.btn-action {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    background-color: #e2e8f0;
+    color: #1e293b;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-action:hover {
+    background-color: #cbd5e1;
+}
+
+/* ====== Empty State ====== */
+.empty-state {
+    text-align: center;
+    font-size: 1rem;
+    padding: 20px;
+    color: #6b7280;
+}

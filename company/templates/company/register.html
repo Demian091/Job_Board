@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+    
+{% comment %} <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign Up</button>
+</form>
+<a href="{% url 'login' %}">Already have an account? Login</a> {% endcomment %}
+
+
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Create Account 🚀</h2>
+    <p class="subtitle">Join our job platform today</p>
+    
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn">Register</button>
+    </form>
+    
+    <p class="switch-link">
+      Already have an account? <a href="{% url 'login' %}">Login</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,39 @@
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="{% url 'feed' %}">JobBoard</a>
+
+      <ul class="nav__links">
+        <li class="nav-item"><a class="nav-link" href="{% url 'feed' %}">Community</a></li>
+        <li><a href="{% url 'job_list' %}">Jobs</a></li>
+        {% if user.is_authenticated and user.role == "employer" %}
+        <li><a href="{% url 'create_job' %}">create jobs</a></li>
+        <li><a href="{% url 'employer_applications' %}">Job Report</a></li>
+
+        {% endif %}
+        {% if user.is_authenticated and user.role == "jobseeker" %}
+        <li><a href="{% url 'my_applications' %}">my applications</a></li>
+        {% endif %}
+      </ul>
+
+      <!-- Account dropdown (works on mobile + desktop) -->
+      <div class="nav__dropdown" data-dropdown>
+        <button class="nav__trigger" type="button" aria-haspopup="true" aria-expanded="false">
+          <span>Account</span>
+          <svg class="caret" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <ul class="nav__menu" role="menu">
+          {% if user.is_authenticated %}
+            {% comment %} <li role="none"><a role="menuitem" href="{% url 'update-user' %}">Settings</a></li> {% endcomment %}
+            <li role="none"><a role="menuitem" href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+            <li role="none"><a role="menuitem" href="{% url 'login' %}">Login</a></li>
+            <li role="none"><a role="menuitem" href="{% url 'register' %}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="feed-container">
+    <h2>Latest Posts</h2>
+
+    {% if user.is_authenticated %}
+    <div class="create-post-btn-container" style="margin-bottom: 20px;">
+        <a href="{% url 'create_post' %}" class="btn btn-primary">
+            ➕ Create Post
+        </a>
+    </div>
+    {% endif %}
+
+
+    {% if posts %}
+    <div class="feed-list">
+        {% for post in posts %}
+        <div class="feed-card">
+            <!-- Header -->
+            <div class="feed-header">
+                <div class="user-info">
+                    <img src="{{ request.user.avatar.url }}" alt="Profile" class="profile-img">
+                    <div>
+                        <h3>{{ post.author.username }}</h3>
+                    </div>
+                </div>
+                <span class="post-date">{{ post.created_at|date:"M d, Y" }}</span>
+            </div>
+            
+            <div class="feed-content">
+                <p class="caption" >{{ post.content }}</p>
+
+                {% if post.image %}
+                <div class="post-image-container">
+                    <img src="{{ post.image.url }}" alt="Post Image" class="post-image">
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Post Actions -->
+            <div class="feed-actions">
+
+                <!-- LIKE BUTTON -->
+                <form method="POST" action="{% url 'toggle_like' post.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-action">
+                        👍 Like ({{ post.total_likes }})
+                    </button>
+                </form>
+
+                <!-- COMMENT BUTTON (SCROLLS TO COMMENT FORM) -->
+                <button class="btn-action" onclick="toggleCommentForm('{{ post.id }}')">
+                    💬 Comment ({{ post.total_comments }})
+                </button>
+
+                <!-- SHARE BUTTON -->
+                <button class="btn-action" onclick="sharePost('{{ request.build_absolute_uri }}#post-{{ post.id }}')">
+                    🔗 Share
+                </button>
+
+                {% if user == post.author %}
+                <form method="POST" action="{% url 'delete_post' post.id %}" style="display:inline;" 
+                    onsubmit="return confirm('Are you sure you want to delete this post? This action cannot be undone.');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-action" style="color:red;">
+                        🗑 Delete
+                    </button>
+                </form>
+                {% endif %}
+
+
+                <div id="comment-form-{{ post.id }}" style="display:none; margin-top:10px;">
+                    <form method="POST" action="{% url 'add_comment' post.id %}">
+                        {% csrf_token %}
+                        <textarea name="content" placeholder="Write a comment..." required></textarea>
+                        <button type="submit">Post Comment</button>
+                    </form>
+
+                    <!-- SHOW COMMENTS -->
+                    <div class="comment-list">
+                        {% for comment in post.comments.all %}
+                            <p><strong>{{ comment.author.username }}</strong>: {{ comment.content }}</p>
+                        {% empty %}
+                            <p>No comments yet.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-state">No posts available yet. Be the first to create one!</p>
+    {% endif %}
+</div>
+{% endblock %}

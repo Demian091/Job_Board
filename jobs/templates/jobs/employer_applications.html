@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<div class="applications-container">
+    <h2>Applications for Your Jobs</h2>
+
+    {% if applications %}
+        <div class="applications-list">
+            {% for application in applications %}
+                <div class="application-card">
+                    <div class="application-header">
+                        <h3>{{ application.applicant.username }} 
+                            <span class="applied-text">applied for</span> 
+                            <em>{{ application.job.title }}</em>
+                        </h3>
+                        <span class="status-badge {{ application.status|lower }}">
+                            {{ application.status }}
+                        </span>
+                    </div>
+
+                    <div class="application-details">
+                        <p><strong>Full Name:</strong> {{ application.full_name }}</p>
+                        <p><strong>University:</strong> {{ application.university }}</p>
+                        <p><strong>GPA:</strong> {{ application.gpa }}</p>
+                        <p><strong>Qualifications:</strong> {{ application.qualifications }}</p>
+                        <p><strong>Past Work References:</strong> {{ application.past_work_references }}</p>
+                        <p><strong>Cover Letter:</strong> {{ application.cover_letter }}</p>
+
+                        {% if application.project_link %}
+                            <p><strong>Project Link:</strong> 
+                                <a href="{{ application.project_link }}" target="_blank" class="project-link">
+                                    {{ application.project_link }}
+                                </a>
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div class="application-actions">
+                        <a href="{% url 'accept_application' application.id %}" class="btn btn-accept">Accept</a>
+                        <a href="{% url 'decline_application' application.id %}" class="btn btn-decline">Decline</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty-state">No applications yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

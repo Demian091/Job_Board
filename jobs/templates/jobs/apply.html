@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="auth-container">
+  <div class="auth-card">
+    <h2> Company Profile</h2>
+    <p class="subtitle">Please Create your Company Profile</p>
+    
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn">Login</button>
+    </form>
+    
+  </div>
+</div>
+{% endblock %}
+
