@@ -18,6 +18,13 @@ A Django-based job board platform where companies can post jobs and users can br
 - Gunicorn
 - Whitenoise
 
+## Environment Variables
+
+- SECRET_KEY=
+- DEBUG=
+- DATABASE_URL=
+- ALLOWED_HOSTS=
+
 ## ⚙️ Installation (Local)
 
 ```bash
@@ -28,3 +35,6 @@ venv\Scripts\activate   # Windows
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+
+
+
