@@ -4,6 +4,7 @@ from company.models import Company
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from company.models import User
+from cloudinary.models import CloudinaryField
 class Job(models.Model):
     CATEGORY_CHOICES = (
         ('IT', 'Information Technology'),
@@ -57,7 +58,7 @@ class Application(models.Model):
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     content = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to="post_images/", blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
 
     def total_likes(self):
