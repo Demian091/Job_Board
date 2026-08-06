@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Sign Up - JobBoard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Create Job Seeker Account</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <p class="text-center mb-0">
+                        Already have an account? <a href="{% url 'login' %}">Sign in</a>
+                    </p>
+                    <p class="text-center mt-2">
+                        <a href="{% url 'signup_employer' %}">Sign up as employer instead</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% block title %}Find Jobs - JobBoard{% endblock %}
+
+{% block content %}
+{% load humanize %}
+<!-- Hero Search Section -->
+<section class="hero-section mb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h1 class="display-4 mb-4">Find Your Dream Job</h1>
+                <form method="get" class="row g-2">
+                    <div class="col-md-5">
+                        <input type="text" name="search" class="form-control form-control-lg" 
+                               placeholder="Job title, keywords..." value="{{ request.GET.search }}">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="location" class="form-control form-control-lg" 
+                               placeholder="Location" value="{{ request.GET.location }}">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-light btn-lg w-100">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <!-- Filters Sidebar -->
+        <div class="col-md-3">
+            <div class="card sticky-top" style="top: 80px; z-index: 100;">
+                <div class="card-body">
+                    <h5 class="card-title">Filters</h5>
+                    <form method="get">
+                        {% if request.GET.search %}<input type="hidden" name="search" value="{{ request.GET.search }}">{% endif %}
+                        {% if request.GET.location %}<input type="hidden" name="location" value="{{ request.GET.location }}">{% endif %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Job Type</label>
+                            <select name="job_type" class="form-select">
+                                <option value="">All Types</option>
+                                <option value="full_time" {% if request.GET.job_type == 'full_time' %}selected{% endif %}>Full Time</option>
+                                <option value="part_time" {% if request.GET.job_type == 'part_time' %}selected{% endif %}>Part Time</option>
+                                <option value="contract" {% if request.GET.job_type == 'contract' %}selected{% endif %}>Contract</option>
+                                <option value="remote" {% if request.GET.job_type == 'remote' %}selected{% endif %}>Remote</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Experience</label>
+                            <select name="experience" class="form-select">
+                                <option value="">All Levels</option>
+                                <option value="entry" {% if request.GET.experience == 'entry' %}selected{% endif %}>Entry Level</option>
+                                <option value="mid" {% if request.GET.experience == 'mid' %}selected{% endif %}>Mid Level</option>
+                                <option value="senior" {% if request.GET.experience == 'senior' %}selected{% endif %}>Senior Level</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" name="remote" class="form-check-input" id="remoteCheck" 
+                                   {% if request.GET.remote %}checked{% endif %}>
+                            <label class="form-check-label" for="remoteCheck">Remote Only</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Listings -->
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4>{{ jobs.paginator.count }} Jobs Found</h4>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                        Sort by: Newest
+                    </button>
+                </div>
+            </div>
+
+            {% for job in jobs %}
+            <div class="card job-card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex">
+                            {% if job.company.logo %}
+                                <img src="{{ job.company.logo.url }}" alt="{{ job.company.name }}" class="company-logo me-3">
+                            {% else %}
+                                <div class="company-logo me-3 bg-secondary d-flex align-items-center justify-content-center text-white">
+                                    <i class="bi bi-building fs-2"></i>
+                                </div>
+                            {% endif %}
+                            <div>
+                                <h5 class="card-title mb-1">
+                                    <a href="{{ job.get_absolute_url }}" class="text-decoration-none text-dark">
+                                        {{ job.title }}
+                                    </a>
+                                    {% if job.is_featured %}
+                                        <span class="badge badge-featured ms-2">Featured</span>
+                                    {% endif %}
+                                </h5>
+                                <p class="text-muted mb-1">{{ job.company.name }}</p>
+                                <div class="small text-muted">
+                                    <i class="bi bi-geo-alt"></i> {{ job.location }}
+                                    {% if job.is_remote %}
+                                        <span class="badge badge-remote ms-2">Remote</span>
+                                    {% endif %}
+                                    <span class="ms-2"><i class="bi bi-clock"></i> {{ job.job_type|title }}</span>
+                                    <span class="ms-2"><i class="bi bi-briefcase"></i> {{ job.get_experience_level_display }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <span class="text-primary fw-bold">
+                                {% if job.salary_min and job.salary_max %}
+                                    ${{ job.salary_min|intcomma }} - ${{ job.salary_max|intcomma }}
+                                {% else %}
+                                    Competitive
+                                {% endif %}
+                            </span>
+                            <br>
+                            <small class="text-muted">{{ job.created_at|timesince }} ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <i class="bi bi-inbox fs-1 text-muted"></i>
+                <p class="mt-3 text-muted">No jobs found matching your criteria.</p>
+            </div>
+            {% endfor %}
+
+            {% if jobs.has_other_pages %}
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if jobs.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ jobs.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+                    {% for num in jobs.paginator.page_range %}
+                        <li class="page-item {% if jobs.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if jobs.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ jobs.next_page_number }}">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

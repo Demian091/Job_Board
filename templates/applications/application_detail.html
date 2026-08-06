@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}Application Details - JobBoard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'applications:my_applications' %}">My Applications</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+            </nav>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">{{ application.job.title }}</h4>
+                    <h6 class="text-muted">{{ application.job.company.name }}</h6>
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <span class="badge bg-{% if application.status == 'pending' %}warning{% elif application.status == 'shortlisted' %}success{% elif application.status == 'rejected' %}danger{% else %}info{% endif %} fs-6">
+                            {{ application.get_status_display }}
+                        </span>
+                    </div>
+
+                    <h6>Cover Letter</h6>
+                    <p>{{ application.cover_letter|linebreaks }}</p>
+
+                    {% if application.portfolio_url %}
+                        <p><strong>Portfolio:</strong> <a href="{{ application.portfolio_url }}" target="_blank">{{ application.portfolio_url }}</a></p>
+                    {% endif %}
+                    
+                    {% if application.linkedin_url %}
+                        <p><strong>LinkedIn:</strong> <a href="{{ application.linkedin_url }}" target="_blank">{{ application.linkedin_url }}</a></p>
+                    {% endif %}
+
+                    {% if application.expected_salary %}
+                        <p><strong>Expected Salary:</strong> ${{ application.expected_salary }}</p>
+                    {% endif %}
+                    
+                    {% if application.notice_period %}
+                        <p><strong>Notice Period:</strong> {{ application.notice_period }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Application Timeline</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><i class="bi bi-send me-2"></i> Applied: {{ application.created_at|date:"M d, Y" }}</li>
+                        <li class="mb-2"><i class="bi bi-clock me-2"></i> Last Updated: {{ application.updated_at|date:"M d, Y" }}</li>
+                    </ul>
+                    
+                    {% if application.resume %}
+                        <hr>
+                        <a href="{{ application.resume.url }}" class="btn btn-outline-primary w-100" target="_blank">
+                            <i class="bi bi-download"></i> Download Resume
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

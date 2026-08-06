@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}{{ job.title }} - {{ job.company.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'jobs:list' %}">Jobs</a></li>
+                    <li class="breadcrumb-item active">{{ job.title }}</li>
+                </ol>
+            </nav>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex">
+                            {% if job.company.logo %}
+                                <img src="{{ job.company.logo.url }}" class="company-logo me-3">
+                            {% else %}
+                                <div class="company-logo me-3 bg-secondary d-flex align-items-center justify-content-center text-white">
+                                    <i class="bi bi-building fs-2"></i>
+                                </div>
+                            {% endif %}
+                            <div>
+                                <h2 class="mb-1">{{ job.title }}</h2>
+                                <h5 class="text-muted">
+                                    <a href="{{ job.company.get_absolute_url }}" class="text-decoration-none">{{ job.company.name }}</a>
+                                </h5>
+                                <div class="text-muted small">
+                                    <i class="bi bi-geo-alt"></i> {{ job.location }}
+                                    {% if job.is_remote %}<span class="badge bg-success ms-2">Remote</span>{% endif %}
+                                    <span class="ms-2"><i class="bi bi-clock"></i> {{ job.get_job_type_display }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% if job.is_featured %}
+                            <span class="badge bg-warning">Featured</span>
+                        {% endif %}
+                    </div>
+
+                    <hr>
+
+                    <div class="mb-4">
+                        <h5>Salary</h5>
+                        <p class="text-primary fw-bold fs-5">
+                            {% if job.salary_min and job.salary_max %}
+                                ${{ job.salary_min|intcomma }} - ${{ job.salary_max|intcomma }} / {{ job.salary_currency }}
+                            {% else %}
+                                Competitive Salary
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Job Description</h5>
+                        <p>{{ job.description|linebreaks }}</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Requirements</h5>
+                        <p>{{ job.requirements|linebreaks }}</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Responsibilities</h5>
+                        <p>{{ job.responsibilities|linebreaks }}</p>
+                    </div>
+
+                    {% if job.benefits %}
+                    <div class="mb-4">
+                        <h5>Benefits</h5>
+                        <p>{{ job.benefits|linebreaks }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card sticky-top" style="top: 80px;">
+                <div class="card-body">
+                    {% if user.is_authenticated %}
+                        {% if user.user_type == 'jobseeker' %}
+                            {% if has_applied %}
+                                <div class="alert alert-info">
+                                    <i class="bi bi-check-circle"></i> You have already applied for this job.
+                                </div>
+                                <a href="{% url 'applications:my_applications' %}" class="btn btn-outline-primary w-100">View Application</a>
+                            {% else %}
+                                <h5 class="card-title">Apply for this position</h5>
+                                <form method="post" action="{% url 'jobs:apply' job.slug %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label class="form-label">Cover Letter</label>
+                                        <textarea name="cover_letter" class="form-control" rows="4" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Resume (optional)</label>
+                                        <input type="file" name="resume" class="form-control" accept=".pdf,.doc,.docx">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Apply Now</button>
+                                </form>
+                            {% endif %}
+                        {% elif job.posted_by == user %}
+                            <div class="d-grid gap-2">
+                                <a href="{% url 'jobs:update' job.slug %}" class="btn btn-outline-primary">Edit Job</a>
+                                <a href="{% url 'applications:manage' %}" class="btn btn-outline-secondary">View Applications</a>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">Sign in as a job seeker to apply.</div>
+                        {% endif %}
+                    {% else %}
+                        <h5 class="card-title">Interested?</h5>
+                        <p>Sign in or create an account to apply for this position.</p>
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary">Sign In</a>
+                            <a href="{% url 'signup_jobseeker' %}" class="btn btn-outline-primary">Create Account</a>
+                        </div>
+                    {% endif %}
+
+                    <hr>
+
+                    <div class="small text-muted">
+                        <p><i class="bi bi-eye"></i> {{ job.views_count }} views</p>
+                        <p><i class="bi bi-people"></i> {{ job.applications_count }} applications</p>
+                        <p><i class="bi bi-calendar"></i> Posted {{ job.created_at|timesince }} ago</p>
+                        <p><i class="bi bi-calendar-x"></i> Expires {{ job.expires_at|timeuntil }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

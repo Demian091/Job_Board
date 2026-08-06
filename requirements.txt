@@ -1,0 +1,1 @@
+crispy-bootstrap5django-crispy-forms==2.6django-environ==0.13.0gunicorn==23.0.0pillow==11.1.0virtualenv==20.29.1djangorestframework>=3.14.0django-cors-headers>=4.3.0drf-spectacularwhitenoisepython-decoupledjangorestframework-simplejwt==5.5.1psycopg2-binary

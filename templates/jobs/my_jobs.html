@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}My Jobs - JobBoard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>My Job Listings</h2>
+        <a href="{% url 'jobs:create' %}" class="btn btn-primary"><i class="bi bi-plus"></i> Post New Job</a>
+    </div>
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Status</th>
+                        <th>Applications</th>
+                        <th>Views</th>
+                        <th>Posted</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td>
+                            <a href="{{ job.get_absolute_url }}" class="text-decoration-none fw-bold">{{ job.title }}</a>
+                            <br><small class="text-muted">{{ job.get_job_type_display }}</small>
+                        </td>
+                        <td>
+                            <span class="badge bg-{% if job.status == 'active' %}success{% elif job.status == 'closed' %}danger{% else %}secondary{% endif %}">
+                                {{ job.get_status_display }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{% url 'applications:manage' %}?job={{ job.id }}" class="btn btn-sm btn-outline-info">
+                                <i class="bi bi-people"></i> {{ job.applications_count }}
+                            </a>
+                        </td>
+                        <td>{{ job.views_count }}</td>
+                        <td>{{ job.created_at|date:"M d, Y" }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ job.get_absolute_url }}" class="btn btn-outline-primary" title="View"><i class="bi bi-eye"></i></a>
+                                <a href="{% url 'jobs:update' job.slug %}" class="btn btn-outline-secondary" title="Edit"><i class="bi bi-pencil"></i></a>
+                                <a href="{% url 'jobs:delete' job.slug %}" class="btn btn-outline-danger" title="Delete"><i class="bi bi-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            <i class="bi bi-inbox fs-1"></i>
+                            <p class="mt-2">You haven't posted any jobs yet.</p>
+                            <a href="{% url 'jobs:create' %}" class="btn btn-primary">Post Your First Job</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
