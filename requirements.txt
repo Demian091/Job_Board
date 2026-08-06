@@ -1,4 +1,4 @@
-django
+Django==5.2.5
 crispy-bootstrap5
 django-crispy-forms==2.6
 django-environ==0.13.0
