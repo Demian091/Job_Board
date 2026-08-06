@@ -1,0 +1,27 @@
+   :root {
+        --primary-color: #2563eb;
+        --secondary-color: #1e40af;
+    }
+    .navbar-brand { font-weight: 700; }
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+    }
+    .job-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .job-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .company-logo {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    .badge-remote { background-color: #10b981; }
+    .badge-featured { background-color: #f59e0b; }
